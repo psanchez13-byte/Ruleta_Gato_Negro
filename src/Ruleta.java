@@ -23,14 +23,28 @@ public class Ruleta {
      * un menú en consola.
      */
     public static void menu() {
-// TODO: Repetir el menú hasta que el usuario elija salir.
+        Scanner recibir = new Scanner(System.in);
+        int opcion = 0;
+
+        do {
+            mostrarMenu();
+            opcion = leerOpcion(recibir);
+            ejecutarOpcion(opcion, recibir);
+
+        } while (!(opcion == 3));
     }
+// TODO: Repetir el menú hasta que el usuario elija salir.
     /**
      * Muestra en consola las opciones disponibles del menú.
      */
     public static void mostrarMenu() {
-// TODO: Mostrar las opciones disponibles para el usuario.
+        System.out.println("Casino Black Cat / Ruleta");
+        System.out.println("1.Partida Ronda");
+        System.out.println("2.Ver Estadisticas");
+        System.out.println("3.Salir");
+        System.out.println("Elija Una Opcion:");
     }
+// TODO: Mostrar las opciones disponibles para el usuario.
     /**
      * Lee la opción elegida por el usuario desde teclado.
      *
@@ -38,6 +52,7 @@ public class Ruleta {
      * @return número de opción ingresado.
      */
     public static int leerOpcion(Scanner in) {
+
 // TODO: Leer y retornar la opción ingresada.
         return 0;
     }
