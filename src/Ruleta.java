@@ -52,10 +52,11 @@ public class Ruleta {
      * @return número de opción ingresado.
      */
     public static int leerOpcion(Scanner in) {
-
-// TODO: Leer y retornar la opción ingresada.
-        return 0;
+        int opcion = in.nextInt();
+        in.nextLine();
+        return opcion;
     }
+// TODO: Leer y retornar la opción ingresada.
     /**
      * Ejecuta la acción correspondiente a la opción del menú.
      *
