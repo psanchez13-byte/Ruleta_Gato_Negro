@@ -64,8 +64,23 @@ public class Ruleta {
      * @param in Scanner para entrada por consola.
      */
     public static void ejecutarOpcion(int opcion, Scanner in) {
-// TODO: Ejecutar la acción asociada a la opción.
+        switch (opcion) {
+            case 1:
+                iniciarRonda(in);
+                break;
+            case 2:
+                mostrarEstadisticas();
+                break;
+            case 3:
+                System.out.println("Saliendo, Nos vemos");
+                break;
+            default:
+                System.out.println("Opcion invalida, seleccione 1,2 o 3");
+                break;
+        }
     }
+// TODO: Ejecutar la acción asociada a la opción.
+
     /**
      * Inicia una ronda de la ruleta: leer apuesta, girar,
      * evaluar y mostrar resultado.
