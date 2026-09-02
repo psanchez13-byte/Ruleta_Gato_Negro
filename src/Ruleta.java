@@ -88,8 +88,20 @@ public class Ruleta {
      * @param in Scanner para entrada por consola.
      */
     public static void iniciarRonda(Scanner in) {
-// TODO: Implementar el flujo completo de una ronda.
+        char tipoApuesta = leerTipoApuesta(in);
+
+        System.out.println("Ingrese monto a apostar");
+        int monto = in.nextInt();
+        in.nextLine();
+
+        int numeroRuleta = girarRuleta();
+        boolean acierto = evaluarResultado(numeroRuleta,tipoApuesta);
+
+        registrarResultado(numeroRuleta,monto,acierto);
+        mostrarResultado(numeroRuleta,tipoApuesta,monto,acierto);
     }
+// TODO: Implementar el flujo completo de una ronda.
+
     /**
      * Permite al usuario seleccionar el tipo de apuesta
      * (R/N/P/I).
