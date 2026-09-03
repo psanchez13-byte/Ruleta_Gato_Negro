@@ -35,6 +35,7 @@ public class Ruleta {
     }
 // TODO: Repetir el menú hasta que el usuario elija salir.
 
+
     public static void mostrarMenu() {
         System.out.println("Casino Black Cat / Ruleta");
         System.out.println("1.Partida Ronda");
@@ -44,12 +45,14 @@ public class Ruleta {
     }
 // TODO: Mostrar las opciones disponibles para el usuario.
 
+
     public static int leerOpcion(Scanner in) {
         int opcion = in.nextInt();
         in.nextLine();
         return opcion;
     }
 // TODO: Leer y retornar la opción ingresada.
+
 
     public static void ejecutarOpcion(int opcion, Scanner in) {
         switch (opcion) {
@@ -69,6 +72,7 @@ public class Ruleta {
     }
 // TODO: Ejecutar la acción asociada a la opción.
 
+
     public static void iniciarRonda(Scanner in) {
         char tipoApuesta = leerTipoApuesta(in);
 
@@ -83,6 +87,7 @@ public class Ruleta {
         mostrarResultado(numeroRuleta,tipoApuesta,monto,acierto);
     }
 // TODO: Implementar el flujo completo de una ronda.
+
 
     public static char leerTipoApuesta(Scanner in) {
         char tipo = ' ';
@@ -120,23 +125,30 @@ public class Ruleta {
 
         return resultado;
     }
-
-
 // TODO: Generar y retornar un número entre 0 y 36.
 
 
-    /**
-     * Evalúa si la apuesta realizada por el jugador
-     * fue acertada.
-     *
-     * @param numero número obtenido en la ruleta.
-     * @param tipo tipo de apuesta elegida.
-     * @return true si acertó, false si perdió.
-     */
     public static boolean evaluarResultado(int numero, char tipo) {
-// TODO: Evaluar el resultado según el tipo de apuesta.
-        return false;
+        if (numero == 0) {
+            return false;
+        }
+
+        switch (tipo) {
+            case 'R':
+                return esRojo(numero);
+            case 'N':
+                return !esRojo(numero);
+            case 'P':
+                return (numero % 2 == 0);
+            case 'I':
+                return (numero % 2 != 0);
+            default:
+                return false;
+        }
+
     }
+// TODO: Evaluar el resultado según el tipo de apuesta.
+
     /**
      * Determina si un número corresponde a color rojo.
      *
