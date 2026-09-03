@@ -158,21 +158,24 @@ public class Ruleta {
         }
         return false;
     }
-
-
 // TODO: Buscar el número en el arreglo numerosRojos.
 
-    /**
-     * Registra los resultados de la ronda en los arreglos
-     * de historial.
-     *
-     * @param numero número obtenido en la ruleta.
-     * @param apuesta monto apostado.
-     * @param acierto si el jugador acertó o no.
-     */
+
     public static void registrarResultado(int numero, int apuesta, boolean acierto) {
-// TODO: Guardar los datos sin superar MAX_HISTORIAL.
+        if (historialSize < MAX_HISTORIAL) {
+
+            historialNumeros[historialSize] = numero;
+            historialApuestas[historialSize] = apuesta;
+            historialAciertos[historialSize] = acierto;
+
+            historialSize++;
+
+
+        } else {
+            System.out.println("El historial esta lleno . No se guardara esta ronda");
+        }
     }
+// TODO: Guardar los datos sin superar MAX_HISTORIAL.
     /**
      * Muestra en consola el resultado de la ronda.
      *
