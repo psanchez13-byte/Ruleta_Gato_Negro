@@ -176,18 +176,23 @@ public class Ruleta {
         }
     }
 // TODO: Guardar los datos sin superar MAX_HISTORIAL.
-    /**
-     * Muestra en consola el resultado de la ronda.
-     *
-     * @param numero número obtenido en la ruleta.
-     * @param tipo tipo de apuesta realizada.
-     * @param monto monto apostado.
-     * @param acierto si el jugador ganó o perdió.
-     */
+
+
     public static void mostrarResultado(int numero, char tipo, int monto, boolean
             acierto) {
-// TODO: Mostrar los datos y el resultado de la ronda.
+        System.out.println(" Resultado De La Ronda ");
+        System.out.println("El numero ganador es: " + numero);
+        System.out.println("Su apuesta fue: " + tipo + " por $" + monto);
+
+        if (acierto) {
+            int ganancia = monto;
+            System.out.println("¡FELICIDADES! Gano $" + ganancia);
+        } else {
+            System.out.println("Lamentablemente perdio $" + monto);
+        }
     }
+// TODO: Mostrar los datos y el resultado de la ronda.
+
     /**
      * Muestra estadísticas generales de todas las
      * rondas jugadas.
