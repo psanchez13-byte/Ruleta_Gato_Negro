@@ -149,16 +149,19 @@ public class Ruleta {
     }
 // TODO: Evaluar el resultado según el tipo de apuesta.
 
-    /**
-     * Determina si un número corresponde a color rojo.
-     *
-     * @param n número de la ruleta.
-     * @return true si es rojo, false en caso contrario.
-     */
+
     public static boolean esRojo(int n) {
-// TODO: Buscar el número en el arreglo numerosRojos.
+        for (int i = 0; i < numerosRojos.length; i ++) {
+            if (numerosRojos[i] == n) {
+                return true;
+            }
+        }
         return false;
     }
+
+
+// TODO: Buscar el número en el arreglo numerosRojos.
+
     /**
      * Registra los resultados de la ronda en los arreglos
      * de historial.
