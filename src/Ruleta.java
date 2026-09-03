@@ -193,11 +193,55 @@ public class Ruleta {
     }
 // TODO: Mostrar los datos y el resultado de la ronda.
 
-    /**
-     * Muestra estadísticas generales de todas las
-     * rondas jugadas.
-     */
+
     public static void mostrarEstadisticas() {
-// TODO: Calcular y mostrar las estadísticas acumuladas.
+        if ( historialSize == 0) {
+            System.out.println(" No hay datos");
+            return;
+        }
+        int totalApostado = calcularTotalApostado();
+        int aciertos = calcularTotalAciertos();
+        int gananciaNeta = calcularGananciaNeta();
+        double porcentaje = (aciertos * 100.0) / historialSize;
+
+        System.out.println(" ESTADÍSTICAS DE LA SESIÓN ");
+        System.out.println("Rondas jugadas: " + historialSize);
+        System.out.println("Monto total apostado: $" + totalApostado);
+        System.out.println("Cantidad total de aciertos: " + aciertos);
+        System.out.println("Porcentaje de aciertos: " + String.format("%.2f", porcentaje) + "%");
+        System.out.println("Ganancia o pérdida neta: $" + gananciaNeta);
+
     }
+// TODO: Calcular y mostrar las estadísticas acumuladas.
+
+    public static int calcularTotalApostado() {
+        int total = 0;
+        for (int i = 0; i < historialSize; i++) {
+            total += historialApuestas[i];
+        }
+        return total;
+    }
+
+    public static int calcularTotalAciertos() {
+        int aciertos = 0;
+        for (int i = 0; i < historialSize; i++) {
+            if (historialAciertos[i]) {
+                aciertos++;
+            }
+        }
+        return aciertos;
+    }
+
+    public static int calcularGananciaNeta() {
+        int ganancia = 0;
+        for (int i = 0; i < historialSize; i++) {
+            if (historialAciertos[i]) {
+                ganancia += historialApuestas[i];
+            } else {
+                ganancia -= historialApuestas[i];
+            }
+        }
+        return ganancia;
+    }
+
 }
