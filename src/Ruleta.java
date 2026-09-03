@@ -110,9 +110,33 @@ public class Ruleta {
      * @return el tipo de apuesta elegido.
      */
     public static char leerTipoApuesta(Scanner in) {
-// TODO: Leer y validar el tipo de apuesta.
-        return 0;
+        char tipo = ' ';
+        boolean valido = false;
+
+        do {
+            System.out.println("Tipos de apuesta: (R) Rojo | (N) Negro | (P) Par | (I) Impar");
+            System.out.println("Ingrese su eleccion: ");
+
+            String entrada = in.nextLine().trim().toUpperCase();
+
+            if (entrada.length() > 0) {
+                tipo = entrada.charAt(0);
+
+                if (tipo == 'R' || tipo == 'N' || tipo == 'P' || tipo == 'I') {
+                    valido = true;
+                } else {
+                    System.out.println("Opcion invalida. Intente de nuevo.");
+                }
+            } else {
+                System.out.println("No ingreso ningun dato");
+            }
+        } while (!valido);
+
+        return tipo;
     }
+// TODO: Leer y validar el tipo de apuesta.
+
+
     /**
      * Simula el giro de la ruleta generando un número
      * aleatorio de 0 a 36.
