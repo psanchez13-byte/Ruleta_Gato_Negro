@@ -38,7 +38,7 @@ public class VentanaLogin {
     /**
      * Valida las credenciales ingresadas utilizando la lista de usuarios.
      *
-     * @param u nombre de usuario ingresado
+     * @param u nombre de usuario ingresado3
      * @param p contraseña ingresada
      * @return el nombre del usuario si las credenciales son válidas o una cadena vacía
     si no existe una coincidencia
