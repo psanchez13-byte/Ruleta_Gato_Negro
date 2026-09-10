@@ -43,7 +43,44 @@ public class VentanaRuleta {
     }
 
     private void ejecutarRonda() {
-        // TODO: Aquí extraeremos los datos y llamaremos a los métodos de Ruleta.java
-        System.out.println("Botón presionado. Preparando el giro...");
+        try {
+            // 1. Extraer y validar el monto apostado
+            // Si el usuario escribe letras, Integer.parseInt lanzará un error que atraparemos abajo
+            int monto = Integer.parseInt(txtMonto.getText());
+
+            if (monto <= 0) {
+                JOptionPane.showMessageDialog(frame, "El monto debe ser mayor a cero.", "Monto Inválido", JOptionPane.WARNING_MESSAGE);
+                return; // Detenemos la ejecución aquí
+            }
+
+            // 2. Extraer el tipo de apuesta del JComboBox
+            // Las opciones son "(R) Rojo", "(N) Negro", etc. El índice 1 de ese texto (la segunda letra) es la clave 'R', 'N', 'P', o 'I'
+            String seleccion = (String) cbTipoApuesta.getSelectedItem();
+            char tipoApuesta = seleccion.charAt(1);
+
+            // 3. COMUNICACIÓN CON LA LÓGICA (Clase Ruleta)
+            int numeroGanador = Ruleta.girarRuleta();
+            boolean acierto = Ruleta.evaluarResultado(numeroGanador, tipoApuesta);
+
+            // Guardamos el resultado en los arreglos históricos
+            Ruleta.registrarResultado(numeroGanador, monto, acierto);
+
+            // 4. Mostrar el resultado visualmente
+            String mensaje = "El número ganador es: " + numeroGanador + "\n\n";
+            if (acierto) {
+                mensaje += "¡FELICIDADES! Ganaste $" + monto;
+                JOptionPane.showMessageDialog(frame, mensaje, "Resultado de la Ronda", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                mensaje += "Lamentablemente perdiste $" + monto;
+                JOptionPane.showMessageDialog(frame, mensaje, "Resultado de la Ronda", JOptionPane.ERROR_MESSAGE);
+            }
+
+            // 5. Limpiar la caja de texto para la siguiente ronda
+            txtMonto.setText("");
+
+        } catch (NumberFormatException ex) {
+            // Si el código llega aquí, significa que el usuario intentó apostar letras o símbolos
+            JOptionPane.showMessageDialog(frame, "Por favor, ingrese un monto válido (solo números enteros).", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
