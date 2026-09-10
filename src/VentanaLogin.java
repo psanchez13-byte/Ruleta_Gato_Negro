@@ -17,6 +17,9 @@ public class VentanaLogin {
      * Configura sus componentes y eventos.
      */
     public VentanaLogin() {
+        // Le añadimos un "Escuchador de Acciones" al botón.
+        // Usamos una función lambda (e ->) para decirle que ejecute login() al hacer clic.
+        btnIngresar.addActionListener(e -> login());
 // TODO: Agregar los usuarios iniciales a la lista
 // TODO: Inicializar y configurar la ventana
     }
