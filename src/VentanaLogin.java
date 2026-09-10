@@ -13,6 +13,7 @@ public class VentanaLogin {
     private final JLabel lblClave = new JLabel("Clave:");
     private final JPasswordField txtClave = new JPasswordField();
     private final JButton btnIngresar = new JButton("Ingresar");
+    private final JButton btnRegistro = new JButton("Registrarse");
     /**
      * Constructor que inicializa la ventana de inicio de sesión.
      * Configura sus componentes y eventos.
@@ -36,11 +37,16 @@ public class VentanaLogin {
         frame.add(new JLabel("")); // Fila 3, Columna 1 (Espacio vacío por estética)
         frame.add(btnIngresar);    // Fila 3, Columna 2
 
+        // FILA 4: El botón de registro
+        frame.add(new JLabel("¿No tienes cuenta?"));
+        frame.add(btnRegistro);
+
         // 4. Conectar el botón a la función que valida el login
         btnIngresar.addActionListener(e -> login());
+        btnRegistro.addActionListener(e -> abrirRegistro());
 
         // 5. Configuraciones de tamaño y cierre
-        frame.setSize(350, 150); // Un tamaño apropiado (evita que se vea gigante como en tu foto)
+        frame.setSize(350, 200); // Un tamaño apropiado (evita que se vea gigante como en tu foto)
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Que el programa se detenga al cerrar la 'X'
     }
 // TODO: Agregar los usuarios iniciales a la lista
@@ -115,7 +121,14 @@ public class VentanaLogin {
      * Debe cerrar la ventana actual e invocar a VentanaRegistro.
      */
     private void abrirRegistro() {
-// TODO: Cerrar la ventana actual y abrir la ventana de registro
+        // Cierra la ventana actual de login
+        frame.dispose();
+
+        // Instancia y abre la ventana de registro que creamos anteriormente
+        VentanaRegistro registro = new VentanaRegistro();
+        registro.mostrarVentana();
     }
+// TODO: Cerrar la ventana actual y abrir la ventana de registro
+
 
 }

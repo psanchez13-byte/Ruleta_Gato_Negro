@@ -17,8 +17,8 @@ public class VentanaRuleta {
         String[] opciones = {"(R) Rojo", "(N) Negro", "(P) Par", "(I) Impar"};
         cbTipoApuesta = new JComboBox<>(opciones);
 
-        // Configuramos el diseño visual (3 filas, 2 columnas)
-        frame.setLayout(new GridLayout(5, 2, 10, 10));
+        // Configuramos el diseño visual (4 filas, 2 columnas)
+        frame.setLayout(new GridLayout(4, 2, 10, 10));
 
         // Fila 1: Selección de apuesta
         frame.add(new JLabel(" Seleccione su apuesta:"));
@@ -36,15 +36,11 @@ public class VentanaRuleta {
         frame.add(new JLabel("")); // Espacio vacío
         frame.add(btnEstadisticas);
 
-        // Fila 5: Botón de registro
-        frame.add(new JLabel("¿No tienes cuenta?"));
-        frame.add(btnRegistro);
 
         btnGirar.addActionListener(e -> ejecutarRonda());
         btnEstadisticas.addActionListener(e -> mostrarEstadisticasVisuales());
-        btnRegistro.addActionListener(e -> abrirRegistro());
 
-        frame.setSize(400, 250);
+        frame.setSize(400, 200);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -74,14 +70,6 @@ public class VentanaRuleta {
                 + "Ganancia o pérdida neta: $" + gananciaNeta;
 
         JOptionPane.showMessageDialog(frame, reporte, "Reporte de Sesión", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private void abrirRegistro() {
-        // Cerramos la ventana de login
-        frame.dispose();
-
-        VentanaRegistro registro = new VentanaRegistro();
-        registro.mostrarVentana();
     }
 
     private void ejecutarRonda() {
