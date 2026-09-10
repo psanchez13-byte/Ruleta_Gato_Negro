@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.awt.GridLayout;
 
 public class VentanaLogin {
     // --- Lista dinámica de usuarios ---
@@ -17,19 +18,47 @@ public class VentanaLogin {
      * Configura sus componentes y eventos.
      */
     public VentanaLogin() {
-        // Le añadimos un "Escuchador de Acciones" al botón.
-        // Usamos una función lambda (e ->) para decirle que ejecute login() al hacer clic.
+        // 1. Agregar los usuarios iniciales a la lista temporal
+        USUARIOS.add(new Usuario("admin", "1234", "Don Donnie"));
+        USUARIOS.add(new Usuario("jugador1", "gato", "Pedro"));
+
+        // 2. Configurar el administrador de diseño (Layout)
+        // GridLayout(filas, columnas, espacioHorizontal, espacioVertical)
+        frame.setLayout(new java.awt.GridLayout(3, 2, 10, 10));
+
+        // 3. Añadir los componentes al "frame" (El orden importa)
+        frame.add(lblUsuario);   // Fila 1, Columna 1
+        frame.add(txtUsuario);   // Fila 1, Columna 2
+
+        frame.add(lblClave);     // Fila 2, Columna 1
+        frame.add(txtClave);     // Fila 2, Columna 2
+
+        frame.add(new JLabel("")); // Fila 3, Columna 1 (Espacio vacío por estética)
+        frame.add(btnIngresar);    // Fila 3, Columna 2
+
+        // 4. Conectar el botón a la función que valida el login
         btnIngresar.addActionListener(e -> login());
+
+        // 5. Configuraciones de tamaño y cierre
+        frame.setSize(350, 150); // Un tamaño apropiado (evita que se vea gigante como en tu foto)
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Que el programa se detenga al cerrar la 'X'
+    }
 // TODO: Agregar los usuarios iniciales a la lista
 // TODO: Inicializar y configurar la ventana
-    }
+
     /**
      * Muestra la ventana en pantalla.
      * Debe centrarla y hacerla visible.
      */
     public void mostrarVentana() {
-// TODO: Centrar y mostrar la ventana
+        // Esto centra la ventana en la pantalla (opcional, pero buena práctica)
+        frame.setLocationRelativeTo(null);
+
+        // ESTA ES LA LÍNEA CLAVE: Dibuja la ventana y mantiene el programa ejecutándose
+        frame.setVisible(true);
     }
+// TODO: Centrar y mostrar la ventana
+
     /**
      * Gestiona el inicio de sesión al presionar el botón.
      * Debe validar las credenciales ingresadas y abrir la siguiente
