@@ -16,16 +16,9 @@ public class Ruleta {
     };
 
     /**
-     * Metodo principal: inicia el programa llamando al menu.
-     */
-    public static void main(String[] args) {
-        menu();
-    }
-
-    /**
      * Controla el flujo principal del programa mostrando
      * un menú en consola hasta que el usuario decida salir.
-     */
+
     public static void menu() {
         Scanner recibir = new Scanner(System.in);
         int opcion = 0;
@@ -37,31 +30,31 @@ public class Ruleta {
 
         } while (!(opcion == 3));
         recibir.close();// Libera Recursos de la memoria
-    }
+    }*/
 
     /**
      * Muestra en consola las opciones disponibles del menu.
-     */
+
     public static void mostrarMenu() {
         System.out.println("Casino Black Cat / Ruleta");
         System.out.println("1.Partida Ronda");
         System.out.println("2.Ver Estadisticas");
         System.out.println("3.Salir");
         System.out.println("Elija Una Opcion:");
-    }
+    }*/
 
     /**
      *Lee la opcion elegida por el usuario desde el teclado
-     */
+
     public static int leerOpcion(Scanner in) {
         int opcion = in.nextInt();
         in.nextLine();
         return opcion;
-    }
+    }*/
 
     /**
      *Ejecuta la accion correspondiente a la opcion del menu
-     */
+
     public static void ejecutarOpcion(int opcion, Scanner in) {
         switch (opcion) {
             case 1:
@@ -77,11 +70,11 @@ public class Ruleta {
                 System.out.println("Opcion invalida, seleccione 1,2 o 3");
                 break;
         }
-    }
+    }*/
 
     /**
      *Inicia la ronda de la ruleta leyendo la apuesta ,girando,evaluando y mostrando el resultado final
-     */
+
     public static void iniciarRonda(Scanner in) {
         char tipoApuesta = leerTipoApuesta(in);
 
@@ -94,11 +87,11 @@ public class Ruleta {
 
         registrarResultado(numeroRuleta,monto,acierto);
         mostrarResultado(numeroRuleta,tipoApuesta,monto,acierto);
-    }
+    }*/
 
     /**
      *Permite al usuario seleccionar y evaluar el tipo de apuesta mediante un ciclo de verificacion
-     */
+
     public static char leerTipoApuesta(Scanner in) {
         char tipo = ' ';
         boolean valido = false;
@@ -123,7 +116,7 @@ public class Ruleta {
         } while (!valido);
 
         return tipo;
-    }
+    }*/
 
     /**
      *simula el giro de la ruleta lanzando un numero aleatorio del 0 al 36
@@ -192,7 +185,7 @@ public class Ruleta {
 
     /**
      * Muestra el resultado final de la ronda del usuario
-     */
+
     public static void mostrarResultado(int numero, char tipo, int monto, boolean
             acierto) {
         System.out.println(" Resultado De La Ronda ");
@@ -205,11 +198,11 @@ public class Ruleta {
         } else {
             System.out.println("Lamentablemente perdio $" + monto);
         }
-    }
+    }*/
 
     /**
      * muestra las estadisticas generales de las rondas jugadas hasta el momento
-     */
+
     public static void mostrarEstadisticas() {
         if ( historialSize == 0) {
             System.out.println(" No hay datos");
@@ -227,7 +220,7 @@ public class Ruleta {
         System.out.println("Porcentaje de aciertos: " + String.format("%.2f", porcentaje) + "%");
         System.out.println("Ganancia o pérdida neta: $" + gananciaNeta);
 
-    }
+    }*/
 
     /**
      *calcula la sumatoria de las apuestas realizadas recorriendo el historial activo
