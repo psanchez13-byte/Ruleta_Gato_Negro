@@ -70,7 +70,7 @@ public class VentanaLogin {
         // Para JPasswordField, la buena práctica es obtener un arreglo de chars por seguridad y luego pasarlo a String
         String p = new String(txtClave.getPassword());
 
-        // 2. Evaluamos usando el método que creamos en el paso anterior
+        // 2. Evaluamos
         String nombreUsuario = validarCredenciales(u, p);
 
         // 3. Tomamos una decisión basada en el resultado
@@ -81,7 +81,9 @@ public class VentanaLogin {
             // Cierra la ventana de Login para liberar recursos de memoria
             frame.dispose();
 
-            // TODO: Aquí abriremos la VentanaSaludo en el próximo paso
+            // Instancia la nueva ventana pasándole el nombre del usuario y la muestra
+            VentanaSaludo saludo = new VentanaSaludo(nombreUsuario);
+            saludo.mostrarVentana();
         } else {
             // Login fallido: Mostramos mensaje de error
             JOptionPane.showMessageDialog(frame, "Usuario o contraseña incorrectos. Intente nuevamente.", "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
