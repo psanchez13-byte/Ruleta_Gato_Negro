@@ -30,7 +30,11 @@ public class VentanaSaludo {
     }
 
     private void irALaRuleta() {
-        System.out.println("Abriendo el motor de la Ruleta...");
-        // TODO: Aquí conectaremos tu clase Ruleta refactorizada
+        // 1. Cerramos la ventana de saludo actual
+        frame.dispose();
+
+        // 2. Instanciamos la nueva ventana del juego y la mostramos
+        VentanaRuleta ruleta = new VentanaRuleta();
+        ruleta.mostrarVentana();
     }
 }
