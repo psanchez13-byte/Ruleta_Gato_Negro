@@ -9,6 +9,7 @@ public class VentanaRuleta {
     private final JComboBox<String> cbTipoApuesta;
     private final JTextField txtMonto = new JTextField();
     private final JButton btnGirar = new JButton("¡Girar Ruleta!");
+    private final JButton btnEstadisticas = new JButton("Ver Estadísticas");
 
     public VentanaRuleta() {
         // Configuramos las opciones del menú desplegable
@@ -16,7 +17,7 @@ public class VentanaRuleta {
         cbTipoApuesta = new JComboBox<>(opciones);
 
         // Configuramos el diseño visual (3 filas, 2 columnas)
-        frame.setLayout(new GridLayout(3, 2, 10, 10));
+        frame.setLayout(new GridLayout(4, 2, 10, 10));
 
         // Fila 1: Selección de apuesta
         frame.add(new JLabel(" Seleccione su apuesta:"));
@@ -30,16 +31,43 @@ public class VentanaRuleta {
         frame.add(new JLabel("")); // Espacio vacío por estética
         frame.add(btnGirar);
 
-        // Conectamos el botón a un método que construiremos luego
-        btnGirar.addActionListener(e -> ejecutarRonda());
+        // Fila 4: Fila para estadísticas
+        frame.add(new JLabel("")); // Espacio vacío
+        frame.add(btnEstadisticas);
 
-        frame.setSize(400, 180);
+        btnGirar.addActionListener(e -> ejecutarRonda());
+        btnEstadisticas.addActionListener(e -> mostrarEstadisticasVisuales());
+
+        frame.setSize(400, 220);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void mostrarVentana() {
         frame.setVisible(true);
+    }
+
+    private void mostrarEstadisticasVisuales() {
+        // Verificamos si hay jugadas registradas consultando la variable estática de Ruleta
+        if (Ruleta.historialSize == 0) {
+            JOptionPane.showMessageDialog(frame, "Aún no hay datos de jugadas en esta sesión.", "Estadísticas", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        int totalApostado = Ruleta.calcularTotalApostado();
+        int aciertos = Ruleta.calcularTotalAciertos();
+        int gananciaNeta = Ruleta.calcularGananciaNeta();
+        double porcentaje = (aciertos * 100.0) / Ruleta.historialSize;
+
+        // Armamos un String multilinea con los resultados
+        String reporte = "ESTADÍSTICAS DE LA SESIÓN\n\n"
+                + "Rondas jugadas: " + Ruleta.historialSize + "\n"
+                + "Monto total apostado: $" + totalApostado + "\n"
+                + "Cantidad total de aciertos: " + aciertos + "\n"
+                + "Porcentaje de aciertos: " + String.format("%.2f", porcentaje) + "%\n"
+                + "Ganancia o pérdida neta: $" + gananciaNeta;
+
+        JOptionPane.showMessageDialog(frame, reporte, "Reporte de Sesión", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void ejecutarRonda() {
