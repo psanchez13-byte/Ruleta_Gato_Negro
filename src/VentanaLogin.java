@@ -88,8 +88,9 @@ public class VentanaLogin {
             frame.dispose();
 
             // Instancia la nueva ventana pasándole el nombre del usuario y la muestra
-            VentanaSaludo saludo = new VentanaSaludo(nombreUsuario);
-            saludo.mostrarVentana();
+            // Nueva Ruta
+            VentanaMenu menu = new VentanaMenu(nombreUsuario);
+            menu.mostrarVentana();
         } else {
             // Login fallido: Mostramos mensaje de error
             JOptionPane.showMessageDialog(frame, "Usuario o contraseña incorrectos. Intente nuevamente.", "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
