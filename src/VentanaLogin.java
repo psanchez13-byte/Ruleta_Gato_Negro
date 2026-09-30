@@ -25,7 +25,7 @@ public class VentanaLogin {
 
         // 2. Configurar el administrador de diseño (Layout)
         // GridLayout(filas, columnas, espacioHorizontal, espacioVertical)
-        frame.setLayout(new java.awt.GridLayout(3, 2, 10, 10));
+        frame.setLayout(new java.awt.GridLayout(4, 2, 10, 10));
 
         // 3. Añadir los componentes al "frame" (El orden importa)
         frame.add(lblUsuario);   // Fila 1, Columna 1
