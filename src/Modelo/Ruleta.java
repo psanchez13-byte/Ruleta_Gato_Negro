@@ -1,7 +1,6 @@
-import jdk.swing.interop.SwingInterOpUtils;
+package Modelo;
 
 import java.util.Random;
-import java.util.Scanner;
 
 public class Ruleta {
     public static final int MAX_HISTORIAL = 100;
@@ -21,7 +20,7 @@ public class Ruleta {
     public static int girarRuleta() {
         final int CANTIDAD_NUMEROS = 37;
 
-        System.out.println("Giro Ruleta");
+        System.out.println("Giro Modelo.Ruleta");
         int resultado = rng.nextInt(CANTIDAD_NUMEROS);
 
         return resultado;

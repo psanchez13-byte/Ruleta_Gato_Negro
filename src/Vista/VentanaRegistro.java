@@ -1,3 +1,7 @@
+package Vista;
+
+import Modelo.Usuario;
+
 import javax.swing.*;
 import java.awt.GridLayout;
 
@@ -15,7 +19,7 @@ public class VentanaRegistro {
         frame.add(new JLabel(" Nombre Real:"));
         frame.add(txtNombre);
 
-        frame.add(new JLabel(" Nombre de Usuario (Login):"));
+        frame.add(new JLabel(" Nombre de Modelo.Usuario (Login):"));
         frame.add(txtUsuario);
 
         frame.add(new JLabel(" Contraseña:"));
@@ -47,11 +51,11 @@ public class VentanaRegistro {
         }
 
         // 2. Agregar el nuevo usuario a la lista estática del Login
-        // Usamos la clase VentanaLogin para acceder a la lista compartida
+        // Usamos la clase Vista.VentanaLogin para acceder a la lista compartida
         VentanaLogin.USUARIOS.add(new Usuario(u, p, n));
 
         // 3. Mensaje de éxito
-        JOptionPane.showMessageDialog(frame, "Usuario registrado exitosamente. Ahora puede iniciar sesión.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frame, "Modelo.Usuario registrado exitosamente. Ahora puede iniciar sesión.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
 
         // 4. Cerrar esta ventana y volver al login
         frame.dispose();

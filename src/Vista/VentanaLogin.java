@@ -1,14 +1,17 @@
+package Vista;
+
+import Modelo.Usuario;
+
 import javax.swing.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.awt.GridLayout;
 
 public class VentanaLogin {
     // --- Lista dinámica de usuarios ---
     public static final List<Usuario> USUARIOS = new ArrayList<>();
     // --- Componentes de la interfaz gráfica ---
     private final JFrame frame = new JFrame("Login - Casino Black Cat");
-    private final JLabel lblUsuario = new JLabel("Usuario:");
+    private final JLabel lblUsuario = new JLabel("Modelo.Usuario:");
     private final JTextField txtUsuario = new JTextField();
     private final JLabel lblClave = new JLabel("Clave:");
     private final JPasswordField txtClave = new JPasswordField();
@@ -93,7 +96,7 @@ public class VentanaLogin {
             menu.mostrarVentana();
         } else {
             // Login fallido: Mostramos mensaje de error
-            JOptionPane.showMessageDialog(frame, "Usuario o contraseña incorrectos. Intente nuevamente.", "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Modelo.Usuario o contraseña incorrectos. Intente nuevamente.", "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
         }
     }
 // TODO: Implementar la lógica de inicio de sesión
@@ -109,7 +112,7 @@ public class VentanaLogin {
     private String validarCredenciales(String u, String p) {
         // Recorremos la lista de usuarios registrados
         for (Usuario usuario : USUARIOS) {
-            // Delegamos la validación al propio objeto Usuario
+            // Delegamos la validación al propio objeto Modelo.Usuario
             if (usuario.validarCredenciales(u, p)) {
                 return usuario.getNombre(); // Si coincide, retornamos el nombre real
             }
@@ -119,7 +122,7 @@ public class VentanaLogin {
 // TODO: Recorrer la lista y validar las credenciales
     /**
      * Abre la ventana de registro para crear un nuevo usuario.
-     * Debe cerrar la ventana actual e invocar a VentanaRegistro.
+     * Debe cerrar la ventana actual e invocar a Vista.VentanaRegistro.
      */
     private void abrirRegistro() {
         // Cierra la ventana actual de login

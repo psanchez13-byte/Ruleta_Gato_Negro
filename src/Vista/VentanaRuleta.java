@@ -1,14 +1,18 @@
+package Vista;
+
+import Modelo.Ruleta;
+
 import javax.swing.*;
 import java.awt.GridLayout;
 
 public class VentanaRuleta {
 
-    private final JFrame frame = new JFrame("Mesa de Ruleta - Casino Black Cat");
+    private final JFrame frame = new JFrame("Mesa de Modelo.Ruleta - Casino Black Cat");
 
     // Componentes de entrada de datos
     private final JComboBox<String> cbTipoApuesta;
     private final JTextField txtMonto = new JTextField();
-    private final JButton btnGirar = new JButton("¡Girar Ruleta!");
+    private final JButton btnGirar = new JButton("¡Girar Modelo.Ruleta!");
     private final JButton btnEstadisticas = new JButton("Ver Estadísticas");
     private final JButton btnRegistro = new JButton("Registrarse");
 
@@ -50,7 +54,7 @@ public class VentanaRuleta {
     }
 
     private void mostrarEstadisticasVisuales() {
-        // Verificamos si hay jugadas registradas consultando la variable estática de Ruleta
+        // Verificamos si hay jugadas registradas consultando la variable estática de Modelo.Ruleta
         if (Ruleta.historialSize == 0) {
             JOptionPane.showMessageDialog(frame, "Aún no hay datos de jugadas en esta sesión.", "Estadísticas", JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -88,7 +92,7 @@ public class VentanaRuleta {
             String seleccion = (String) cbTipoApuesta.getSelectedItem();
             char tipoApuesta = seleccion.charAt(1);
 
-            // 3. COMUNICACIÓN CON LA LÓGICA (Clase Ruleta)
+            // 3. COMUNICACIÓN CON LA LÓGICA (Clase Modelo.Ruleta)
             int numeroGanador = Ruleta.girarRuleta();
             boolean acierto = Ruleta.evaluarResultado(numeroGanador, tipoApuesta);
 
