@@ -1,3 +1,4 @@
+import Controlador.SessionController;
 import Vista.VentanaLogin;
 import com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme;
 import javax.swing.*;
@@ -10,8 +11,10 @@ public class Launcher {
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-        VentanaLogin login = new VentanaLogin();
-        login.mostrarVentana();
 
+        SessionController session = new SessionController();
+
+        VentanaLogin login = new VentanaLogin(session);
+        login.mostrarVentana();
     }
 }

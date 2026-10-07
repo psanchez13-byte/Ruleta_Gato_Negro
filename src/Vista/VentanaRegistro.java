@@ -1,34 +1,45 @@
 package Vista;
 
-import Modelo.Usuario;
+import Controlador.SessionController;
 
 import javax.swing.*;
-import java.awt.GridLayout;
+import java.awt.*;
 
 public class VentanaRegistro {
 
-    private final JFrame frame = new JFrame("Registro de Nuevo Jugador");
-    private final JTextField txtNombre = new JTextField();
+    private final JFrame frame = new JFrame("Registro - Casino Black Cat");
+    private final JLabel lblUsuario = new JLabel("Nuevo Usuario:");
     private final JTextField txtUsuario = new JTextField();
+    private final JLabel lblClave = new JLabel("Contraseña:");
     private final JPasswordField txtClave = new JPasswordField();
-    private final JButton btnGuardar = new JButton("Registrar y Volver");
+    private final JLabel lblNombre = new JLabel("Nombre Completo:");
+    private final JTextField txtNombre = new JTextField();
 
-    public VentanaRegistro() {
+    private final JButton btnRegistrar = new JButton("Registrar");
+    private final JButton btnVolver = new JButton("Volver");
+
+    // Controlador de sesión
+    private final SessionController session;
+
+    public VentanaRegistro(SessionController session) {
+        this.session = session;
+
         frame.setLayout(new GridLayout(4, 2, 10, 10));
 
-        frame.add(new JLabel(" Nombre Real:"));
+        frame.add(lblNombre);
         frame.add(txtNombre);
 
-        frame.add(new JLabel(" Nombre de Modelo.Usuario (Login):"));
+        frame.add(lblUsuario);
         frame.add(txtUsuario);
 
-        frame.add(new JLabel(" Contraseña:"));
+        frame.add(lblClave);
         frame.add(txtClave);
 
-        frame.add(new JLabel("")); // Espacio
-        frame.add(btnGuardar);
+        frame.add(btnVolver);
+        frame.add(btnRegistrar);
 
-        btnGuardar.addActionListener(e -> registrarUsuario());
+        btnRegistrar.addActionListener(e -> registrarNuevoJugador());
+        btnVolver.addActionListener(e -> volverAlLogin());
 
         frame.setSize(400, 200);
         frame.setLocationRelativeTo(null);
@@ -39,27 +50,25 @@ public class VentanaRegistro {
         frame.setVisible(true);
     }
 
-    private void registrarUsuario() {
-        String n = txtNombre.getText().trim();
-        String u = txtUsuario.getText().trim();
-        String p = new String(txtClave.getPassword()).trim();
+    private void registrarNuevoJugador() {
+        String u = txtUsuario.getText();
+        String p = new String(txtClave.getPassword());
+        String n = txtNombre.getText();
 
-        // 1. Verificar que los campos no estén vacíos (Regla de negocio)
-        if (n.isEmpty() || u.isEmpty() || p.isEmpty()) {
-            JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-            return; // Detenemos la ejecución
+        try {
+            // Delegamos el registro al controlador
+            session.registrarUsuario(u, p, n);
+            JOptionPane.showMessageDialog(frame, "Registro exitoso. Ahora puede iniciar sesión.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            volverAlLogin();
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(frame, ex.getMessage(), "Error de Registro", JOptionPane.ERROR_MESSAGE);
         }
+    }
 
-        // 2. Agregar el nuevo usuario a la lista estática del Login
-        // Usamos la clase Vista.VentanaLogin para acceder a la lista compartida
-        VentanaLogin.USUARIOS.add(new Usuario(u, p, n));
-
-        // 3. Mensaje de éxito
-        JOptionPane.showMessageDialog(frame, "Modelo.Usuario registrado exitosamente. Ahora puede iniciar sesión.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
-
-        // 4. Cerrar esta ventana y volver al login
+    private void volverAlLogin() {
         frame.dispose();
-        VentanaLogin login = new VentanaLogin();
+        // Pasamos la sesión de vuelta al login
+        VentanaLogin login = new VentanaLogin(session);
         login.mostrarVentana();
     }
 }
