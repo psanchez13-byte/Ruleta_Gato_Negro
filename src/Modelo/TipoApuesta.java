@@ -1,4 +1,5 @@
 package Modelo;
 
-public class TipoApuesta {
+public enum TipoApuesta {
+    ROJO, NEGRO, PAR, IMPAR
 }
