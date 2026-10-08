@@ -24,14 +24,6 @@ public class VentanaLogin {
     public VentanaLogin(SessionController session) {
         this.session = session;
 
-        // Agregar los usuarios iniciales
-        try {
-            session.registrarUsuario("admin", "1234", "Don Donnie");
-            session.registrarUsuario("jugador1", "gato", "Pedro");
-        } catch (IllegalArgumentException e) {
-            // Ignoramos si ya existen
-        }
-
         //layout
         frame.setLayout(new GridLayout(4, 2, 10, 10));
 
@@ -83,8 +75,8 @@ public class VentanaLogin {
 
     private void abrirRegistro() {
         frame.dispose();
-        ;
 
-        JOptionPane.showMessageDialog(frame, "Ventana de registro en construcción para la Iteración 04.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        VentanaRegistro registro = new VentanaRegistro(session);
+        registro.mostrarVentana();
     }
 }

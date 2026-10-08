@@ -1,7 +1,7 @@
 package Vista;
 
 import Controlador.RuletaController;
-import Modelo.Ruleta;
+import Controlador.SessionController; // NUEVO IMPORT
 import Modelo.TipoApuesta;
 
 import javax.swing.*;
@@ -14,18 +14,23 @@ public class VentanaRuleta {
     // Componentes de entrada de datos
     private final JComboBox<TipoApuesta> cbTipoApuesta;
     private final JTextField txtMonto = new JTextField();
-    private final JButton btnGirar = new JButton("Girar Ruleta");
+    private final JButton btnGirar = new JButton("¡Girar Ruleta!");
     private final JButton btnEstadisticas = new JButton("Ver Estadísticas");
+    private final JButton btnVolver = new JButton("Volver al Menú"); // NUEVO BOTÓN
 
+    // Controladores
+    private final SessionController session; // para recordar quién es el usuario
     private final RuletaController controlador;
 
-    // Constructor que recibe el controlador
-    public VentanaRuleta(RuletaController controlador) {
+    // Constructor actualizado
+    public VentanaRuleta(SessionController session, RuletaController controlador) {
+        this.session = session;
         this.controlador = controlador;
 
         cbTipoApuesta = new JComboBox<>(TipoApuesta.values());
 
-        frame.setLayout(new GridLayout(4, 2, 10, 10));
+        // Aumentamos a 5 filas para que quepa el nuevo botón
+        frame.setLayout(new GridLayout(5, 2, 10, 10));
 
         frame.add(new JLabel(" Seleccione su apuesta:"));
         frame.add(cbTipoApuesta);
@@ -39,10 +44,15 @@ public class VentanaRuleta {
         frame.add(new JLabel(""));
         frame.add(btnEstadisticas);
 
+        // Agregamos la fila del botón volver
+        frame.add(btnVolver);
+        frame.add(new JLabel(""));
+
         btnGirar.addActionListener(e -> ejecutarRonda());
         btnEstadisticas.addActionListener(e -> mostrarEstadisticasVisuales());
+        btnVolver.addActionListener(e -> volverAlMenu()); // Acción del botón
 
-        frame.setSize(400, 200);
+        frame.setSize(400, 250); // Un poco más alto para el botón extra
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -51,9 +61,15 @@ public class VentanaRuleta {
         frame.setVisible(true);
     }
 
+    // Cierra la ruleta y vuelve a abrir el menú
+    private void volverAlMenu() {
+        frame.dispose();
+        VentanaMenu menu = new VentanaMenu(session, controlador);
+        menu.mostrarVentana();
+    }
+
     private void mostrarEstadisticasVisuales() {
-        // Obtenemos la instancia real de la ruleta
-        Ruleta miRuleta = controlador.getModelo();
+        Modelo.Ruleta miRuleta = controlador.getModelo();
 
         if (miRuleta.getHistorialSize() == 0) {
             JOptionPane.showMessageDialog(frame, "Aún no hay datos de jugadas en esta sesión.", "Estadísticas", JOptionPane.INFORMATION_MESSAGE);
@@ -84,21 +100,27 @@ public class VentanaRuleta {
                 return;
             }
 
-            TipoApuesta tipoApuesta = (TipoApuesta) cbTipoApuesta.getSelectedItem();
+            try {
+                controlador.getModelo().descontarSaldo(monto);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(frame, ex.getMessage(), "Saldo Insuficiente", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
+            TipoApuesta tipoApuesta = (TipoApuesta) cbTipoApuesta.getSelectedItem();
             int numeroGanador = controlador.girar();
             boolean acierto = controlador.evaluarYRegistrar(numeroGanador, tipoApuesta, monto);
 
-            // Mostrar resultado visualmente
             String mensaje = "El número ganador es: " + numeroGanador + "\n\n";
             if (acierto) {
-                mensaje += "¡FELICIDADES! Ganaste $" + monto;
+                int premio = monto * 2;
+                controlador.getModelo().depositar(premio);
+                mensaje += "¡FELICIDADES! Ganaste $" + premio + "\n(Tu saldo ahora es $" + controlador.getModelo().getSaldo() + ")";
                 JOptionPane.showMessageDialog(frame, mensaje, "Resultado de la Ronda", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                mensaje += "Lamentablemente perdiste $" + monto;
+                mensaje += "Lamentablemente perdiste $" + monto + "\n(Tu saldo ahora es $" + controlador.getModelo().getSaldo() + ")";
                 JOptionPane.showMessageDialog(frame, mensaje, "Resultado de la Ronda", JOptionPane.ERROR_MESSAGE);
             }
-
             txtMonto.setText("");
 
         } catch (NumberFormatException ex) {

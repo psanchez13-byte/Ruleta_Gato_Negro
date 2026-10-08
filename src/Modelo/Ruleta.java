@@ -11,9 +11,7 @@ public class Ruleta {
 
     // Atributos de instancia
     private int saldo;
-    private int[] historialNumeros;
-    private int[] historialApuestas;
-    private boolean[] historialAciertos;
+    private Resultado[] historialResultados;
     private int historialSize;
     private Random rng;
 
@@ -22,9 +20,7 @@ public class Ruleta {
      */
     public Ruleta(int saldoInicial) {
         this.saldo = Math.max(0, saldoInicial); // Asegura que no inicie con saldo negativo
-        this.historialNumeros = new int[MAX_HISTORIAL];
-        this.historialApuestas = new int[MAX_HISTORIAL];
-        this.historialAciertos = new boolean[MAX_HISTORIAL];
+        this.historialResultados = new Resultado[MAX_HISTORIAL];
         this.historialSize = 0;
         this.rng = new Random();
     }
@@ -54,7 +50,7 @@ public class Ruleta {
 
     public void descontarSaldo(int monto) {
         if (monto > this.saldo) {
-            throw new IllegalArgumentException("Saldo insuficiente.");
+            throw new IllegalArgumentException("Saldo insuficiente. Tu saldo actual es $" + this.saldo);
         }
         this.saldo -= monto;
     }
@@ -102,9 +98,7 @@ public class Ruleta {
 
     public void registrarResultado(int numero, int apuesta, boolean acierto) {
         if (historialSize < MAX_HISTORIAL) {
-            historialNumeros[historialSize] = numero;
-            historialApuestas[historialSize] = apuesta;
-            historialAciertos[historialSize] = acierto;
+            historialResultados[historialSize] = new Resultado(numero, apuesta, acierto);
             historialSize++;
         } else {
             System.out.println("El historial está lleno. No se guardará esta ronda.");
@@ -114,7 +108,7 @@ public class Ruleta {
     public int calcularTotalApostado() {
         int total = 0;
         for (int i = 0; i < historialSize; i++) {
-            total += historialApuestas[i];
+            total += historialResultados[i].getMontoApostado();
         }
         return total;
     }
@@ -122,7 +116,7 @@ public class Ruleta {
     public int calcularTotalAciertos() {
         int aciertos = 0;
         for (int i = 0; i < historialSize; i++) {
-            if (historialAciertos[i]) {
+            if (historialResultados[i].isAcierto()) {
                 aciertos++;
             }
         }
@@ -132,12 +126,16 @@ public class Ruleta {
     public int calcularGananciaNeta() {
         int ganancia = 0;
         for (int i = 0; i < historialSize; i++) {
-            if (historialAciertos[i]) {
-                ganancia += historialApuestas[i];
+            if (historialResultados[i].isAcierto()) {
+                ganancia += historialResultados[i].getMontoApostado();
             } else {
-                ganancia -= historialApuestas[i];
+                ganancia -= historialResultados[i].getMontoApostado();
             }
         }
         return ganancia;
+    }
+
+    public Resultado[] getHistorialResultados() {
+        return historialResultados;
     }
 }

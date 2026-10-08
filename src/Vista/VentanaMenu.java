@@ -68,8 +68,8 @@ public class VentanaMenu {
     }
 
     private void abrirRuleta() {
-        frame.dispose(); // Cierra el menú
-        VentanaRuleta ruleta = new VentanaRuleta(controladorRuleta);
+        frame.dispose();
+        VentanaRuleta ruleta = new VentanaRuleta(session, controladorRuleta);
         ruleta.mostrarVentana();
     }
 
@@ -82,7 +82,14 @@ public class VentanaMenu {
     }
 
     private void mostrarHistorial() {
-        JOptionPane.showMessageDialog(frame, "La ventana de historial.", "En construcción", JOptionPane.INFORMATION_MESSAGE);
+        // Instanciamos el controlador de resultados
+        Controlador.ResultadoController resController = new Controlador.ResultadoController();
+
+        // Le pedimos que formatee el historial
+        String textoHistorial = resController.obtenerHistorialFormateado(controladorRuleta.getModelo());
+
+        // Mostramos el texto en un cuadro de diálogo
+        JOptionPane.showMessageDialog(frame, textoHistorial, "Historial de Jugadas", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void actualizarTextos() {
