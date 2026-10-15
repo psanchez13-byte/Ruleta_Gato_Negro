@@ -24,7 +24,7 @@ public class VentanaMenu {
     public VentanaMenu(SessionController session, RuletaController controladorRuleta) {
         this.session = session;
         // Si no existe un juego activo, lo creamos
-        this.controladorRuleta = (controladorRuleta != null) ? controladorRuleta : new RuletaController();
+        this.controladorRuleta = (controladorRuleta != null) ? controladorRuleta : new RuletaController(session);
 
         lblMensaje = new JLabel();
         lblMensaje.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 10));
