@@ -96,9 +96,9 @@ public class Ruleta {
 
     // --- HISTORIAL ---
 
-    public void registrarResultado(int numero, int apuesta, boolean acierto) {
+    public void registrarResultadoEnRuleta(Resultado resultado) {
         if (historialSize < MAX_HISTORIAL) {
-            historialResultados[historialSize] = new Resultado(numero, apuesta, acierto);
+            historialResultados[historialSize] = resultado;
             historialSize++;
         } else {
             System.out.println("El historial está lleno. No se guardará esta ronda.");

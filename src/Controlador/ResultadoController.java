@@ -1,28 +1,36 @@
 package Controlador;
 
 import Modelo.Resultado;
-import Modelo.Ruleta;
+import Modelo.Usuario;
+import java.util.List;
 
 public class ResultadoController {
 
-    /**
-     * Toma el modelo de la ruleta y transforma el arreglo de objetos
-     * en un texto formateado y listo para mostrar en pantalla.
-     */
-    public String obtenerHistorialFormateado(Ruleta modelo) {
-        if (modelo.getHistorialSize() == 0) {
-            return "Aún no hay jugadas registradas en esta sesión.";
+    private final SessionController session;
+
+    public ResultadoController(SessionController session) {
+        this.session = session;
+    }
+
+    public String obtenerHistorialUsuario() {
+        if (!session.hayUsuario()) {
+            return "No hay ninguna sesión activa.";
         }
 
-        // Usamos StringBuilder porque es más eficiente para concatenar mucho texto
+        Usuario usuario = session.getUsuarioActual();
+        List<Resultado> historial = usuario.getHistorial();
+
+        if (historial.isEmpty()) {
+            return "Aún no hay jugadas registradas para el jugador: " + usuario.getUsername();
+        }
+
         StringBuilder reporte = new StringBuilder();
-        reporte.append("--- DETALLE DE JUGADAS ---\n\n");
+        reporte.append("--- HISTORIAL DE JUGADAS: ").append(usuario.getUsername().toUpperCase()).append(" ---\n\n");
 
-        Resultado[] resultados = modelo.getHistorialResultados();
-
-        for (int i = 0; i < modelo.getHistorialSize(); i++) {
-            Resultado r = resultados[i];
+        for (int i = 0; i < historial.size(); i++) {
+            Resultado r = historial.get(i);
             reporte.append("Ronda ").append(i + 1).append(":\n");
+            reporte.append(" - Tipo de apuesta: ").append(r.getTipoApuesta()).append("\n");
             reporte.append(" - Número ganador: ").append(r.getNumeroObtenido()).append("\n");
             reporte.append(" - Monto apostado: $").append(r.getMontoApostado()).append("\n");
             reporte.append(" - Resultado: ").append(r.isAcierto() ? "¡GANÓ!" : "Perdió").append("\n");

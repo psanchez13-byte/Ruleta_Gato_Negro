@@ -82,14 +82,9 @@ public class VentanaMenu {
     }
 
     private void mostrarHistorial() {
-        // Instanciamos el controlador de resultados
-        Controlador.ResultadoController resController = new Controlador.ResultadoController();
-
-        // Le pedimos que formatee el historial
-        String textoHistorial = resController.obtenerHistorialFormateado(controladorRuleta.getModelo());
-
-        // Mostramos el texto en un cuadro de diálogo
-        JOptionPane.showMessageDialog(frame, textoHistorial, "Historial de Jugadas", JOptionPane.INFORMATION_MESSAGE);
+        frame.dispose();
+        VentanaHistorial historial = new VentanaHistorial(session, controladorRuleta);
+        historial.mostrarVentana();
     }
 
     private void actualizarTextos() {

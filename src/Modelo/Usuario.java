@@ -1,19 +1,18 @@
 package Modelo;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario {
     private String username;
     private String password;
     private String nombre;
+    private List<Resultado> historial;
 
     public Usuario(String username, String password, String nombre) {
         this.username = username;
         this.password = password;
         setNombre(nombre);
-    }
-
-    public Usuario() {
-        // Delega al constructor principal usando 'this'
-        this("Pepo", "1234", "Pedro");
+        this.historial = new ArrayList<>();
     }
 
     // Verifica credenciales
@@ -47,5 +46,12 @@ public class Usuario {
             throw new IllegalArgumentException("El nombre no puede estar vacío");
         }
         this.nombre = nombre;
+    }
+    public void agregarResultado(Resultado r) {
+        this.historial.add(r);
+    }
+
+    public List<Resultado> getHistorial() {
+        return historial;
     }
 }
