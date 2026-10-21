@@ -67,7 +67,6 @@ public class VentanaRegistro {
 
     private void volverAlLogin() {
         frame.dispose();
-        // Pasamos la sesión de vuelta al login
         VentanaLogin login = new VentanaLogin(session);
         login.mostrarVentana();
     }

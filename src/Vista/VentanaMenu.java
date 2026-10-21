@@ -11,6 +11,7 @@ public class VentanaMenu {
     private final JButton btnJugar = new JButton("Jugar");
     private final JButton btnHistorial = new JButton("Historial");
     private final JButton btnSalir = new JButton("Salir");
+    private final JButton btnEstadisticas = new JButton("Estadísticas");
     private final JLabel lblMensaje;
 
     private final JLabel lblPerfil = new JLabel();
@@ -36,6 +37,7 @@ public class VentanaMenu {
         panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panelBotones.add(btnJugar);
         panelBotones.add(btnHistorial);
+        panelBotones.add(btnEstadisticas);
         panelBotones.add(btnSalir);
 
         // ---  Sub-panel para el Perfil y Saldo ---
@@ -54,6 +56,7 @@ public class VentanaMenu {
         btnHistorial.addActionListener(e -> mostrarHistorial());
         btnCambiarNombre.addActionListener(e -> cambiarNombre());
         btnRecargar.addActionListener(e -> recargarSaldo());
+        btnEstadisticas.addActionListener(e -> mostrarEstadisticas());
 
         // Cargamos el nombre y el saldo inicial
         actualizarTextos();
@@ -127,5 +130,29 @@ public class VentanaMenu {
             // Entra aquí si el modelo rechaza el monto
             JOptionPane.showMessageDialog(frame, ex.getMessage(), "Monto Inválido", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void mostrarEstadisticas() {
+        if (!session.hayUsuario()) {
+            return;
+        }
+
+        java.util.List<Modelo.Resultado> historial = session.getUsuarioActual().getHistorial();
+
+        if (historial.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "Aún no hay jugadas registradas para calcular estadísticas.", "Estadísticas", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        Modelo.Estadisticas stats = new Modelo.Estadisticas(historial);
+
+        String reporte = "--- ESTADÍSTICAS DEL JUGADOR ---\n\n"
+                + "Total de jugadas: " + stats.getTotalJugadas() + "\n"
+                + "Victorias: " + stats.getVictorias() + "\n"
+                + "Porcentaje de victorias: " + String.format("%.2f", stats.getPorcentajeVictorias()) + "%\n"
+                + "Racha máxima (consecutivas): " + stats.getRachaMaxima() + "\n"
+                + "Apuesta más frecuente: " + (stats.getTipoMasJugado() != null ? stats.getTipoMasJugado() : "Ninguna");
+
+        JOptionPane.showMessageDialog(frame, reporte, "Sección de Estadísticas", JOptionPane.INFORMATION_MESSAGE);
     }
 }

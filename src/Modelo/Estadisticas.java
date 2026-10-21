@@ -15,7 +15,7 @@ public class Estadisticas {
 		calcularEstadisticas(historial);
 	}
 	private void calcularEstadisticas(List<Resultado> historial) {
-		this.totalJugadas = historial.size(); // cantidad de resultados registrados[cite: 12]
+		this.totalJugadas = historial.size();
 
 		if (this.totalJugadas == 0) {
 			return; // Si no hay jugadas, terminamos para evitar división por cero
@@ -30,7 +30,7 @@ public class Estadisticas {
 				this.victorias++;
 				rachaActual++;
 				if (rachaActual > this.rachaMaxima) {
-					this.rachaMaxima = rachaActual; // mayor secuencia de aciertos consecutivos[cite: 12]
+					this.rachaMaxima = rachaActual;
 				}
 			} else {
 				rachaActual = 0;
