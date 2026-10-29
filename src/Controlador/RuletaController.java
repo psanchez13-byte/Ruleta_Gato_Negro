@@ -2,8 +2,6 @@ package Controlador;
 
 import Modelo.Resultado;
 import Modelo.Ruleta;
-import Modelo.TipoApuesta;
-import Modelo.Usuario;
 
 public class RuletaController {
     private Ruleta modelo;
