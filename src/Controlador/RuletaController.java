@@ -16,12 +16,14 @@ public class RuletaController {
         return modelo.girarRuleta();
     }
 
-    public boolean evaluarYRegistrar(int numero, TipoApuesta tipo, int monto) {
-        boolean acierto = modelo.evaluarResultado(numero, tipo);
+    public boolean evaluarYRegistrar(int numero, ApuestaBase apuesta) {
+        String colorGanador = modelo.determinarColor(numero);
+        boolean acierto = apuesta.acierta(numero, colorGanador);
 
-        Resultado nuevoResultado = new Resultado(numero, monto, acierto, tipo);
+        Resultado nuevoResultado = new Resultado(numero, apuesta.getMonto(), acierto, apuesta);
 
         modelo.registrarResultadoEnRuleta(nuevoResultado);
+
         if (session.hayUsuario()) {
             session.getUsuarioActual().agregarResultado(nuevoResultado);
         }

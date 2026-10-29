@@ -66,23 +66,14 @@ public class Ruleta {
     /**
      * Evalúa si la apuesta fue acertada usando el Enum TipoApuesta
      */
-    public boolean evaluarResultado(int numero, TipoApuesta tipo) {
+    public String determinarColor(int numero) {
         if (numero == 0) {
-            return false;
+            return "Verde";
         }
-
-        switch (tipo) {
-            case ROJO:
-                return esRojo(numero);
-            case NEGRO:
-                return !esRojo(numero);
-            case PAR:
-                return (numero % 2 == 0);
-            case IMPAR:
-                return (numero % 2 != 0);
-            default:
-                return false;
+        if (esRojo(numero)) {
+            return "Rojo";
         }
+        return "Negro";
     }
 
     private boolean esRojo(int n) {
