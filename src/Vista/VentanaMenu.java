@@ -31,7 +31,10 @@ public class VentanaMenu {
             this.controladorRuleta = new RuletaController(session);
             if (session.hayUsuario()) {
                 int saldoRecuperado = session.getUsuarioActual().getSaldoGuardado();
-                this.controladorRuleta.getModelo().depositar(saldoRecuperado);
+                // Solo intentamos depositar si el jugador realmente tiene dinero guardado
+                if (saldoRecuperado > 0) {
+                    this.controladorRuleta.getModelo().depositar(saldoRecuperado);
+                }
             }
         }
 
