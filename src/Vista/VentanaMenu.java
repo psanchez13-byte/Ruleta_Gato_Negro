@@ -24,8 +24,16 @@ public class VentanaMenu {
 
     public VentanaMenu(SessionController session, RuletaController controladorRuleta) {
         this.session = session;
-        // Si no existe un juego activo, lo creamos
-        this.controladorRuleta = (controladorRuleta != null) ? controladorRuleta : new RuletaController(session);
+        // Si no existe un juego activo, lo creamos y le cargamos el saldo del archivo
+        if (controladorRuleta != null) {
+            this.controladorRuleta = controladorRuleta;
+        } else {
+            this.controladorRuleta = new RuletaController(session);
+            if (session.hayUsuario()) {
+                int saldoRecuperado = session.getUsuarioActual().getSaldoGuardado();
+                this.controladorRuleta.getModelo().depositar(saldoRecuperado);
+            }
+        }
 
         lblMensaje = new JLabel();
         lblMensaje.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 10));
@@ -77,11 +85,18 @@ public class VentanaMenu {
     }
 
     private void cerrarSesion() {
+        // GUARDAR SALDO en el archivo CSV antes de cerrar
+        if (session.hayUsuario()) {
+            String username = session.getUsuarioActual().getUsername();
+            int saldoActual = controladorRuleta.getModelo().getSaldo();
+            Modelo.GestorUsuariosCSV.actualizarSaldoUsuario(username, saldoActual);
+        }
+
         session.cerrarSesion();
         frame.dispose();
 
-        //Volver a abrir VentanaLogin pasándole la variable 'session'
-        JOptionPane.showMessageDialog(null, "Sesión cerrada. Cierre la ventana por ahora.", "Adiós", JOptionPane.INFORMATION_MESSAGE);
+        VentanaLogin login = new VentanaLogin(session);
+        login.mostrarVentana();
     }
 
     private void mostrarHistorial() {

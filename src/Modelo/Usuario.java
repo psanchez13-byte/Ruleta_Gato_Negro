@@ -6,6 +6,7 @@ public class Usuario {
     private String username;
     private String password;
     private String nombre;
+    private int saldoGuardado = 0;
     private List<Resultado> historial;
 
     public Usuario(String username, String password, String nombre) {
@@ -53,5 +54,13 @@ public class Usuario {
 
     public List<Resultado> getHistorial() {
         return historial;
+    }
+
+    public void setSaldoGuardado(int saldo) {
+        this.saldoGuardado = saldo;
+    }
+
+    public int getSaldoGuardado() {
+        return this.saldoGuardado;
     }
 }

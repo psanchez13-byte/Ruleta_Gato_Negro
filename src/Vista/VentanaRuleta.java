@@ -11,7 +11,7 @@ public class VentanaRuleta {
     private final JFrame frame = new JFrame("Mesa de Ruleta - Casino Black Cat");
 
     // Componentes de entrada de datos
-    private final JComboBox<TipoApuesta> cbTipoApuesta;
+    private final JComboBox<String> cbTipoApuesta;
     private final JTextField txtMonto = new JTextField();
     private final JButton btnGirar = new JButton("¡Girar Ruleta!");
     private final JButton btnEstadisticas = new JButton("Ver Estadasticas");
@@ -25,7 +25,7 @@ public class VentanaRuleta {
         this.session = session;
         this.controlador = controlador;
 
-        cbTipoApuesta = new JComboBox<>(TipoApuesta.values());
+        cbTipoApuesta = new JComboBox<>(new String[]{"Rojo", "Negro", "Par", "Impar"});
 
         frame.setLayout(new GridLayout(5, 2, 10, 10));
 
@@ -89,9 +89,8 @@ public class VentanaRuleta {
     private void ejecutarRonda() {
         try {
             int monto = Integer.parseInt(txtMonto.getText());
-
             if (monto <= 0) {
-                JOptionPane.showMessageDialog(frame, "El monto debe ser mayor a cero.", "Monto Invalido", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "El monto debe ser mayor a cero.", "Monto Inválido", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
@@ -102,11 +101,21 @@ public class VentanaRuleta {
                 return;
             }
 
-            TipoApuesta tipoApuesta = (TipoApuesta) cbTipoApuesta.getSelectedItem();
-            int numeroGanador = controlador.girar();
-            boolean acierto = controlador.evaluarYRegistrar(numeroGanador, tipoApuesta, monto);
+            String seleccion = (String) cbTipoApuesta.getSelectedItem();
 
-            String mensaje = "El numero ganador es: " + numeroGanador + "\n\n";
+            Modelo.ApuestaBase apuesta;
+            switch (seleccion) {
+                case "Rojo": apuesta = new Modelo.ApuestaRojo(monto); break;
+                case "Negro": apuesta = new Modelo.ApuestaNegro(monto); break;
+                case "Par": apuesta = new Modelo.ApuestaPar(monto); break;
+                case "Impar": apuesta = new Modelo.ApuestaImpar(monto); break;
+                default: return;
+            }
+
+            int numeroGanador = controlador.girar();
+            boolean acierto = controlador.evaluarYRegistrar(numeroGanador, apuesta);
+
+            String mensaje = "El número ganador es: " + numeroGanador + "\n\n";
             if (acierto) {
                 int premio = monto * 2;
                 controlador.getModelo().depositar(premio);
@@ -119,7 +128,7 @@ public class VentanaRuleta {
             txtMonto.setText("");
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(frame, "Por favor, ingrese un monto valido (solo numeros enteros).", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Por favor, ingrese un monto válido.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
