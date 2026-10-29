@@ -30,7 +30,7 @@ public class ResultadoController {
         for (int i = 0; i < historial.size(); i++) {
             Resultado r = historial.get(i);
             reporte.append("Ronda ").append(i + 1).append(":\n");
-            reporte.append(" - Tipo de apuesta: ").append(r.getTipoApuesta()).append("\n");
+            reporte.append(" - Tipo de apuesta: ").append(r.getApuesta().getEtiqueta()).append("\n");
             reporte.append(" - Número ganador: ").append(r.getNumeroObtenido()).append("\n");
             reporte.append(" - Monto apostado: $").append(r.getMontoApostado()).append("\n");
             reporte.append(" - Resultado: ").append(r.isAcierto() ? "¡GANÓ!" : "Perdió").append("\n");

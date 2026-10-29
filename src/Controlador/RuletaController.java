@@ -1,5 +1,6 @@
 package Controlador;
 
+import Modelo.ApuestaBase;
 import Modelo.Resultado;
 import Modelo.Ruleta;
 
